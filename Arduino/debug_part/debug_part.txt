@@ -1,0 +1,15 @@
+`
+    /*DEBUG START*/
+    while (Serial.available() > 0)
+    {
+        recvChar = Serial.read();
+        Serial1.print(recvChar);
+    }
+
+    while (Serial1.available() > 0)
+    {
+        recvChar = Serial1.read();
+        Serial.print(recvChar);
+    }
+    /*DEBUG END*/
+`
