@@ -25,19 +25,13 @@ This is the repository of The Edge to Cloud Code Generator (ECCG).
 - [BlueZ][link9] is the official Linux Bluetooth protocol stack.
 - BlueZ is based on D-Bus.
 - The auto pairing Python3 script is written based on D-Bus.
+- The script does the following: (I) looks for a bluetooth module named 'Slave', (II) removes if paired, (III) then repairs.
+- The process is asynchronous.
+- The D-Bus might be difficult to be understood by beginners, but you should be able to realize what kind of changes you need to make by looking at the script, without knowing how D-Bus work.
 
-
-
-
-
-
-
-
-
-
-
-
-
+### Notes regarding ZigBee Python3 script:
+- Python script is preferred due the Digi-Key providing an official [API][link10]. 
+- The script allows you to send data to designated coordinator.
 
 
 [link1]: <https://www.raspberrypi.org/products/raspberry-pi-4-model-b/>
@@ -49,3 +43,4 @@ This is the repository of The Edge to Cloud Code Generator (ECCG).
 [link7]: <https://www.digi.com/products/embedded-systems/digi-xbee/rf-modules/2-4-ghz-rf-modules/xbee3-zigbee-3>
 [link8]: <https://wiki.seeedstudio.com/Grove-Serial_Bluetooth_v3.0/>
 [link9]: <http://www.bluez.org/release-of-bluez-5-54-and-5-53/>
+[link10]: <https://xbplib.readthedocs.io/en/latest/#indexapi>
