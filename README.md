@@ -22,7 +22,7 @@ This is the repository of The Edge to Cloud Code Generator (ECCG).
 - The ECCG assume you are running modules for the first time.
 
 ### Notes regarding bluetooth auto pairing Python3 script:
-- BlueZ[link9] is the official Linux Bluetooth protocol stack.
+- [BlueZ][link9] is the official Linux Bluetooth protocol stack.
 - BlueZ is based on D-Bus.
 - The auto pairing Python3 script is written based on D-Bus.
 
