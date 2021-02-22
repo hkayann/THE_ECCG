@@ -1,5 +1,7 @@
 # THE_ECCG
-The repository of The Edge to Cloud Code Generator
+This is the repository of The Edge to Cloud Code Generator (ECCG).
+
+## The ECCG is a web application that generates ready to use code/guide for designing IoT applications mainly designed for data scientists. 
 
 ### The ECCG is tested with the following hardware:
 
@@ -12,9 +14,17 @@ The repository of The Edge to Cloud Code Generator
 - [Digi XBee 3 Zigbee 3 RF Module][link7]
 - [Grove - Serial Bluetooth v3.0][link8]
 
+### Notes regarding Arduino codes:
+- The Arduino codes are actually given as JS variables that are used to build the web application.
+- They need to be slightly edited to be a MWE. 
+- The codes include debugging part that prints data flow to Serial Monitor.
+- The some of AT (Hayes) commands are loaded into flash memory, hence requiring to be run only once. However running them each time do not make any significant differences.
+- The ECCG assume you are running modules for the first time.
 
-
-
+### Notes regarding bluetooth auto pairing Python3 script:
+- BlueZ[link9] is the official Linux Bluetooth protocol stack.
+- BlueZ is based on D-Bus.
+- The auto pairing Python3 script is written based on D-Bus.
 
 
 
@@ -38,3 +48,4 @@ The repository of The Edge to Cloud Code Generator
 [link6]: <https://wiki.seeedstudio.com/Grove-Bee_Socket/>
 [link7]: <https://www.digi.com/products/embedded-systems/digi-xbee/rf-modules/2-4-ghz-rf-modules/xbee3-zigbee-3>
 [link8]: <https://wiki.seeedstudio.com/Grove-Serial_Bluetooth_v3.0/>
+[link9]: <http://www.bluez.org/release-of-bluez-5-54-and-5-53/>
