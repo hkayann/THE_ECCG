@@ -33,6 +33,9 @@ This is the repository of The Edge to Cloud Code Generator (ECCG).
 - Python script is preferred due the Digi-Key providing an official [API][link10]. 
 - The script allows you to send data to designated coordinator.
 
+### Notes regarding given examples:
+- The examples folder contains ready-to-use Arduino codes.
+
 
 [link1]: <https://www.raspberrypi.org/products/raspberry-pi-4-model-b/>
 [link2]: <https://www.dfrobot.com/product-1148.html/>
