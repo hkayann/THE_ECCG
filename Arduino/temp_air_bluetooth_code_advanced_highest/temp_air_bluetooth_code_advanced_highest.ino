@@ -1,10 +1,12 @@
 `
 /*Please replace with your own correct variables if you see "!R" near the given variable.*/
 #include "DHT.h"
+#include"Air_Quality_Sensor.h"
 
 #define DHTTYPE DHT11 //!R
 #define DHTPIN 4 //!R
 DHT dht(DHTPIN, DHTTYPE);
+AirQualitySensor sensor(A1); //!R
 
 //send data per interval seconds(end user decides)
 unsigned long interval = 30000L;
@@ -12,6 +14,7 @@ unsigned long interval = 30000L;
 void setup()
 {
   Serial.begin(9600);
+  sensor.init();
   setupBlueToothConnection();
 }
 
@@ -23,9 +26,8 @@ void loop()
   String WholeCommand = "";
   byte i = 0;
   //define sensor variables
-  float humData = 0.00;
-  float humSum = 0.00;
-  float humAverage = 0.00;
+  float tempData = 0.00, airData = 0.00;
+  float tempHighest = 0.00, airHighest = 0.00;
   float temp_hum_val[2] = {0};
   
   /*DEBUG START*/
@@ -46,21 +48,32 @@ void loop()
   {
     if(!dht.readTempAndHumidity(temp_hum_val))
     {
-      humData = temp_hum_val[0];
+      tempData = temp_hum_val[1];
+      airData = sensor.getValue();
+      if(tempData > tempHighest)
+      {
+        tempHighest = tempData;
+      }
+      if(airData > airHighest)
+      {
+        airHighest = airData;
+      }
     }
-    humSum = humData + humSum;
     endTime = millis();
     i++;
   }
-  humAverage = humSum / i;
-        
+
   Serial1.print("`+ id_loc + `");
   Serial1.print(";");
   Serial1.print("`+ textbox_nodeID + `");
   Serial1.print(";");
-  Serial1.print("`+ id_hum + `");
+  Serial1.print("`+ id_temp + `");
   Serial1.print(":");
-  Serial1.print(humAverage);
+  Serial1.print(tempHighest);
+  Serial1.print(":0;");
+  Serial1.print("`+ id_air + `");
+  Serial1.print(":");
+  Serial1.print(airHighest);
   Serial1.print(":0;");
   Serial1.print("B\\n");
 }
@@ -82,9 +95,9 @@ void setupBlueToothConnection()
   delay(400);
   Serial1.print("AT+ROLES"); // set the role as slave !R
   delay(400);
-  Serial1.print("AT+NAMESlave"); // set the bluetooth name as "Slave" !R
+  Serial1.print("AT+NAME`+ textbox_bluetooth_name +`"); // set the bluetooth name as "Slave" !R
   delay(400);
-  Serial1.print("AT+PIN0000");
+  Serial1.print("AT+PIN`+ textbox_bluetooth_pin +`");
   delay(400);
   Serial1.print("AT+AUTH0");
   delay(400);

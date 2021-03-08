@@ -24,8 +24,7 @@ void loop()
   byte i = 0;
   //define sensor variables
   float humData = 0.00;
-  float humSum = 0.00;
-  float humAverage = 0.00;
+  float humLowest = 500.00;
   float temp_hum_val[2] = {0};
   
   /*DEBUG START*/
@@ -47,12 +46,14 @@ void loop()
     if(!dht.readTempAndHumidity(temp_hum_val))
     {
       humData = temp_hum_val[0];
+      if(humData < humLowest)
+      {
+        humLowest = humData;
+      }
     }
-    humSum = humData + humSum;
     endTime = millis();
     i++;
   }
-  humAverage = humSum / i;
         
   Serial1.print("`+ id_loc + `");
   Serial1.print(";");
@@ -60,7 +61,7 @@ void loop()
   Serial1.print(";");
   Serial1.print("`+ id_hum + `");
   Serial1.print(":");
-  Serial1.print(humAverage);
+  Serial1.print(humLowest);
   Serial1.print(":0;");
   Serial1.print("B\\n");
 }
@@ -82,9 +83,9 @@ void setupBlueToothConnection()
   delay(400);
   Serial1.print("AT+ROLES"); // set the role as slave !R
   delay(400);
-  Serial1.print("AT+NAMESlave"); // set the bluetooth name as "Slave" !R
+  Serial1.print("AT+NAME`+ textbox_bluetooth_name +`"); // set the bluetooth name as "Slave" !R
   delay(400);
-  Serial1.print("AT+PIN0000");
+  Serial1.print("AT+PIN`+ textbox_bluetooth_pin +`");
   delay(400);
   Serial1.print("AT+AUTH0");
   delay(400);

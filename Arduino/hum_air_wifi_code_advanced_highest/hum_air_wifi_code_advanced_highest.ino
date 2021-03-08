@@ -25,22 +25,20 @@ void setup()
   delay(500);
   Serial1.print("AT+CWMODE_DEF=3\\r\\n");
   delay(500);
-  Serial1.print("AT+CWJAP=\"Work\",\"GroveWork\"\\r\\n");
+  Serial1.print("AT+CWJAP=\"`+ textbox_ssid + `\",\"` + textbox_passwd +`\"\\r\\n");
   delay(500);
 }
 
 void loop()
 {
   float humData = 0.00, airData = 0.00;
-  float humSum = 0.00, airSum = 0.00;
-  float humAverage = 0.00, airAverage = 0.00;
+  float humHighest = 0.00, airHighest = 0.00;
   float temp_hum_val[2] = {0};
   char recvChar;
-  byte i = 0;
     `+ debug_part +
-  /*Connect to Host*/
+            `
   if(millis() - pass_time > 20000 && exit_while == 0){
-    Serial1.print("AT+CIPSTART=\"TCP\",\"192.168.43.28\",4448\\r\\n"); //!R
+    Serial1.print("AT+CIPSTART=\"TCP\",\"`+ textbox_hostip + `\",` + textbox_port +`\\r\\n"); //!R
     exit_while = 1;
   }
   startTime = millis();
@@ -51,17 +49,20 @@ void loop()
     {
       humData = temp_hum_val[0];
       airData = sensor.getValue();
+      if(humData > humHighest)
+      {
+        humHighest = humData;
+      }
+      if(airData > airHighest)
+      {
+        airHighest = airData;
+      }
     }
-    humSum = humData + humSum;
-    airSum = airData + airSum;
     endTime = millis();
-    i++;
   }
-  humAverage = humSum / i;
-  airAverage = airSum / i;
-
-  String hum_data = String(humAverage,2);
-  String air_data = String(airAverage);
+  
+  String hum_data = String(humHighest,2);
+  String air_data = String(airHighest);
   byte total_bytes = hum_data.length()+air_data.length()+22;
   String total_bytes_sent = String(total_bytes);
   Serial1.print("AT+CIPSEND="+total_bytes_sent+"\\r\\n");
