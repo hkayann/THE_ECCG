@@ -36,6 +36,10 @@ This is the repository of The Edge to Cloud Code Generator (ECCG).
 ### Notes regarding given examples:
 - The examples folder contains ready-to-use Arduino codes.
 
+### Notes regarding updates (01/03/2021):
+- The ECCG now sends average data per given time interval by default.
+- The highest and lowest data options are also added.
+
 
 [link1]: <https://www.raspberrypi.org/products/raspberry-pi-4-model-b/>
 [link2]: <https://www.dfrobot.com/product-1148.html/>
