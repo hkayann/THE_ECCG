@@ -32,11 +32,9 @@ void setup()
 void loop()
 {
   float tempData = 0.00, airData = 0.00;
-  float tempSum = 0.00, airSum = 0.00;
-  float tempAverage = 0.00, airAverage = 0.00;
+  float tempHighest = 0.00, airHighest = 0.00;
   float temp_hum_val[2] = {0};
   char recvChar;
-  byte i = 0;
     `+ debug_part +
             `
   if(millis() - pass_time > 20000 && exit_while == 0){
@@ -51,22 +49,25 @@ void loop()
     {
       tempData = temp_hum_val[1];
       airData = sensor.getValue();
+      if(tempData > tempHighest)
+      {
+        tempHighest = tempData;
+      }
+      if(airData > airHighest)
+      {
+        airHighest = airData;
+      }
     }
-    tempSum = tempData + tempSum;
-    airSum = airData + airSum;
     endTime = millis();
-    i++;
   }
-  tempAverage = tempSum / i;
-  airAverage = airSum / i;
-
-  String temp_data = String(tempAverage,2);
-  String air_data = String(airAverage);
+  
+  String temp_data = String(tempHighest,2);
+  String air_data = String(airHighest);
   byte total_bytes = temp_data.length()+air_data.length()+22;
   String total_bytes_sent = String(total_bytes);
   Serial1.print("AT+CIPSEND="+total_bytes_sent+"\\r\\n");
   delay(1000);
-  Serial1.print("`+ id_loc + `"+";"+"` + textbox_nodeID + `"+";"+"` + id_temp + `"+":"+temp_data+":0;"+"` + id_air + `"+":"+air_data+":0;"+"` + id_wifi +`"+"\\n");
+  Serial1.print("`+ id_loc + `"+";"+"` + textbox_nodeID + `"+";"+"` + id_temp + `"+":"+temp_data+":0;"+"` + id_air + `"+":"+temp_data+":0;"+"` + id_wifi +`"+"\\n");
   }
 }
 `

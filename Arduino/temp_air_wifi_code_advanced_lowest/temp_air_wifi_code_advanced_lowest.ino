@@ -32,11 +32,9 @@ void setup()
 void loop()
 {
   float tempData = 0.00, airData = 0.00;
-  float tempSum = 0.00, airSum = 0.00;
-  float tempAverage = 0.00, airAverage = 0.00;
+  float tempLowest = 500.00, airLowest = 500.00;
   float temp_hum_val[2] = {0};
   char recvChar;
-  byte i = 0;
     `+ debug_part +
             `
   if(millis() - pass_time > 20000 && exit_while == 0){
@@ -51,17 +49,20 @@ void loop()
     {
       tempData = temp_hum_val[1];
       airData = sensor.getValue();
+      if(tempData < tempLowest)
+      {
+        tempLowest = tempData;
+      }
+      if(airData < airLowest)
+      {
+        airLowest = airData;
+      }
     }
-    tempSum = tempData + tempSum;
-    airSum = airData + airSum;
     endTime = millis();
-    i++;
   }
-  tempAverage = tempSum / i;
-  airAverage = airSum / i;
-
-  String temp_data = String(tempAverage,2);
-  String air_data = String(airAverage);
+  
+  String temp_data = String(tempLowest,2);
+  String air_data = String(airLowest);
   byte total_bytes = temp_data.length()+air_data.length()+22;
   String total_bytes_sent = String(total_bytes);
   Serial1.print("AT+CIPSEND="+total_bytes_sent+"\\r\\n");
