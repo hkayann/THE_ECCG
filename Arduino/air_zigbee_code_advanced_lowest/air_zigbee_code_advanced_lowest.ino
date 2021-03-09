@@ -40,28 +40,26 @@ void loop() {
   unsigned long endTime =0L, startTime =0L;
   byte i = 0;
   float airData = 0.00;
-  float airSum = 0.00;
-  float airAverage = 0.00;
-  
+  float airLowest = 500.00;
     `+ debug_part + `
-    
   startTime = millis();
   endTime = startTime;
   while((endTime-startTime) < interval)
   {
     airData = sensor.getValue();
-    airSum = airData + airSum;
+    if(airData < airLowest)
+    {
+      airLowest = airData;
+    }
     endTime = millis();
-    i++;
   }
-  airAverage = airSum / i;
   Serial1.print("`+ id_loc + `");
   Serial1.print(";");
   Serial1.print("`+ textbox_nodeID + `");
   Serial1.print(";");
   Serial1.print("`+ id_air + `");
   Serial1.print(":");
-  Serial1.print(airAverage);
+  Serial1.print(airLowest);
   Serial1.print(":0;");
   Serial1.print("Z\\n");
 }

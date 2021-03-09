@@ -8,7 +8,7 @@ DHT dht(DHTPIN, DHTTYPE);
 
 unsigned long pass_time = millis();
 int exit_while = 0;
-Serial1.print("AT+CWJAP=\"`+ textbox_ssid + `\",\"` + textbox_passwd +`\"\\r\\n");
+
 void setup()
 {
   /*Initialize ports*/
@@ -24,7 +24,7 @@ void setup()
   Serial1.print("AT+CWJAP=\"`+ textbox_ssid + `\",\"` + textbox_passwd +`\"\\r\\n");
   delay(500);
 }
-Serial1.print("AT+CIPSTART=\"TCP\",\"`+ textbox_hostip + `\",` + textbox_port +`\\r\\n");
+
 void loop()
 {
   float humData = 0.00;

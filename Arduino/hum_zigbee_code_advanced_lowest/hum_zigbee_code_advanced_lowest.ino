@@ -1,14 +1,17 @@
 `
 /*Please replace with your own correct variables if you see "!R" near the given variable.*/
-#include "Air_Quality_Sensor.h"
-
-AirQualitySensor sensor(A2); //!R
+#include "DHT.h"
+#define DHTPIN 4 //!R
+#define DHTTYPE DHT11 //!R
+DHT dht(DHTPIN, DHTTYPE);
+//send data per interval seconds(end user decides)
+unsigned long interval = 30000L;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   Serial1.begin(9600);
-  sensor.init();
+  dht.begin();
 
   //set the xbee device
   Serial1.print("+++"); //enter in command mode
@@ -35,33 +38,35 @@ void setup() {
 }
 
 void loop() {
-
-  char recvChar;
-  unsigned long endTime =0L, startTime =0L;
-  byte i = 0;
-  float airData = 0.00;
-  float airSum = 0.00;
-  float airAverage = 0.00;
   
-    `+ debug_part + `
-    
+  byte i = 0;
+  float temp_hum_val[2] = {0};
+  unsigned long endTime =0L, startTime =0L;
+  char recvChar;
+  float humData = 0.00;
+  float humLowest = 500.00;
   startTime = millis();
   endTime = startTime;
+  `+ debug_part + `
   while((endTime-startTime) < interval)
   {
-    airData = sensor.getValue();
-    airSum = airData + airSum;
+    if(!dht.readTempAndHumidity(temp_hum_val))
+    {
+      humData = temp_hum_val[0];
+      if(humData < humLowest)
+      {
+        humLowest = humData;
+      }
+    }
     endTime = millis();
-    i++;
-  }
-  airAverage = airSum / i;
+  }  
   Serial1.print("`+ id_loc + `");
   Serial1.print(";");
   Serial1.print("`+ textbox_nodeID + `");
   Serial1.print(";");
-  Serial1.print("`+ id_air + `");
+  Serial1.print("`+ id_hum + `");
   Serial1.print(":");
-  Serial1.print(airAverage);
+  Serial1.print(humLowest);
   Serial1.print(":0;");
   Serial1.print("Z\\n");
 }

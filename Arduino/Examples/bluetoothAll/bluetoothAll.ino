@@ -7,7 +7,7 @@ DHT dht(DHTPIN, DHTTYPE);
 AirQualitySensor sensor(A2);
 
 //send data per interval seconds(end user decides)
-unsigned long interval = 20000;
+unsigned long interval = 30000L;
 
 void setup()
 {
@@ -20,7 +20,6 @@ void loop() {
 
   char recvChar;
   //define time variables
-  unsigned long interval = 15000L;
   unsigned long endTime =0L, startTime =0L;
   String WholeCommand = "";
   byte i = 0;
@@ -31,7 +30,6 @@ void loop() {
   float tempSum = 0.00, humSum = 0.00, airSum = 0.00;
   float tempAverage = 0.00, humAverage = 0.00, airAverage = 0.00;
   float temp_hum_val[2] = {0};
-
   
   /*DEBUG START*/
   while(Serial1.available()){

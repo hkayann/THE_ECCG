@@ -1,10 +1,12 @@
 `
 /*Please replace with your own correct variables if you see "!R" near the given variable.*/
 #include "DHT.h"
+#include "Air_Quality_Sensor.h"
 
 #define DHTPIN 4 //!R
 #define DHTTYPE DHT11 //!R
 DHT dht(DHTPIN, DHTTYPE);
+AirQualitySensor sensor(A2); //!R
 
 unsigned long pass_time = millis();
 int exit_while = 0;
@@ -14,6 +16,7 @@ void setup()
   /*Initialize ports*/
   Serial1.begin(115200);
   Serial.begin(115200);
+  sensor.init();
     
   /*Set-up Wi-Fi Module*/
   delay(1000);
@@ -27,8 +30,8 @@ void setup()
 
 void loop()
 {
-  float humData = 0.00;
-  float humLowest = 500.00;
+  float tempData = 0.00, humData = 0.00, airData = 0.00;
+  float tempHighest = 0.00, humHighest = 0.00, airHighest = 0.00;
   float temp_hum_val[2] = {0};
   char recvChar;
     `+ debug_part +
@@ -44,20 +47,33 @@ void loop()
   {
     if(!dht.readTempAndHumidity(temp_hum_val))
     {
+      tempData = temp_hum_val[1];
       humData = temp_hum_val[0];
-      if(humData < humLowest)
+      airData = sensor.getValue();
+      if(tempData > tempHighest)
       {
-        humLowest = humData;
+        tempHighest = tempData;
+      }
+      if(humData > humHighest)
+      {
+        humHighest = humData;
+      }
+      if(airData > airHighest)
+      {
+        airHighest = airData;
       }
     }
     endTime = millis();
   }
-  String hum_data = String(humLowest,2);
-  byte total_bytes = hum_data.length()+16;
+  
+  String temp_data = String(tempHighest,2);
+  String hum_data = String(humHighest,2);
+  String air_data = String(airHighest);
+  byte total_bytes = temp_data.length()+hum_data.length()+air_data.length()+28;
   String total_bytes_sent = String(total_bytes);
   Serial1.print("AT+CIPSEND="+total_bytes_sent+"\\r\\n");
   delay(1000);
-  Serial1.print("`+ id_loc + `"+";"+"` + textbox_nodeID + `"+";"+"` + id_hum + `"+":"+hum_data+":0;"+"` + id_wifi +`"+"\\n");
+  Serial1.print("`+ id_loc + `"+";"+"` + textbox_nodeID + `"+";"+"` + id_temp + `"+":"+temp_data+":0;"+"` + id_hum + `"+":"+hum_data+":0;"+"` + id_air + `"+":"+air_data+":0;"+"` + id_wifi +`"+"\\n");
   }
 }
 `
