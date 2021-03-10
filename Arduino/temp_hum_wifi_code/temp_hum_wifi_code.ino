@@ -7,7 +7,7 @@
 #define DHTTYPE DHT11 //!R
 DHT dht(DHTPIN, DHTTYPE);
 //send data per interval seconds(end user decides)
-unsigned long interval = 30000L;
+unsigned long interval = `+textbox_timeInterval+`L;
 unsigned long pass_time = millis();
 int exit_while = 0;
 
