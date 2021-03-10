@@ -34,7 +34,7 @@ void loop()
   float temp_hum_val[2] = {0};
   char recvChar;
   byte i = 0;
-    `+ debug_part +
+    `+ debug_part +`
   /*Connect to Host*/
   if(millis() - pass_time > 20000 && exit_while == 0){
     Serial1.print("AT+CIPSTART=\"TCP\",\"192.168.43.28\",4448\\r\\n"); //!R
