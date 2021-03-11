@@ -4,7 +4,7 @@
 
 AirQualitySensor sensor(A2); //!R
 //send data per interval seconds(end user decides)
-unsigned long interval = 30000L;
+unsigned long interval =`+textbox_timeInterval+`L;
 unsigned long pass_time = millis();
 int exit_while = 0;
 
