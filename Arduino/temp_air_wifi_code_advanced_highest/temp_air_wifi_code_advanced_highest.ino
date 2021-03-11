@@ -35,7 +35,7 @@ void loop()
   float tempHighest = 0.00, airHighest = 0.00;
   float temp_hum_val[2] = {0};
   char recvChar;
-    `+ debug_part +`
+    `+ debug_part +
             `
   if(millis() - pass_time > 20000 && exit_while == 0){
     Serial1.print("AT+CIPSTART=\"TCP\",\"`+ textbox_hostip + `\",` + textbox_port +`\\r\\n"); //!R
