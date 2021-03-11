@@ -7,7 +7,7 @@
 AirQualitySensor sensor(A2); //!R
 DHT dht(DHTPIN, DHTTYPE);
 //send data per interval seconds(end user decides)
-unsigned long interval = 30000L;
+unsigned long interval =`+textbox_timeInterval+`L;
 
 void setup() {
   // put your setup code here, to run once:
