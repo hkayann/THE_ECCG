@@ -6,7 +6,7 @@
 #define DHTTYPE DHT11 //!R
 DHT dht(DHTPIN, DHTTYPE);
 //send data per interval seconds(end user decides)
-unsigned long interval = 30000L;
+unsigned long interval =`+textbox_timeInterval+`L;
 unsigned long pass_time = millis();
 int exit_while = 0;
 
@@ -34,7 +34,7 @@ void loop()
   float temp_hum_val[2] = {0};
   char recvChar;
   byte i = 0;
-    `+ debug_part +
+    `+ debug_part +`
   /*Connect to Host*/
   if(millis() - pass_time > 20000 && exit_while == 0){
     Serial1.print("AT+CIPSTART=\"TCP\",\"192.168.43.28\",4448\\r\\n"); //!R
