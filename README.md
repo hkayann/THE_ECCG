@@ -1,7 +1,7 @@
 # THE_ECCG
 This is the repository of The Edge to Cloud Code Generator (ECCG).
 
-## The ECCG is a web application that generates ready to use code/guide for designing IoT applications mainly designed for data scientists. 
+## The ECCG is a web application that generates ready to use code/guide for designing IoT applications mainly designed for data scientists. You can access the application from the following URL: https://edgetocloudgenerator.herokuapp.com/the_eccg.
 
 ### The ECCG is tested with the following hardware:
 
